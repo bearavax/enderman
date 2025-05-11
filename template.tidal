@@ -1,0 +1,363 @@
+-- TIDAL ALGORAVE TEMPLATE
+-- A comprehensive template for live coding algorave in TidalCycles
+-- Save this as a .tidal file and use with Pulsar/Atom/VSCode
+
+-- SECTION 1: BASIC SETUP
+-- Set the tempo
+setcps 0.6 -- 0.6 * 60 * 2 = 72 BPM
+
+-- SECTION 2: DRUM PATTERNS
+-- Basic drum patterns to get started
+
+-- Kick pattern
+d1 $ sound "bd(3,8)"
+  # gain 1.0
+  # lpf 3000
+  # resonance 0.2
+
+-- Snare pattern
+d2 $ sound "~ sn:2 ~ sn:2"
+  # gain 0.9
+  # room 0.2
+  # size 0.2
+
+-- Hi-hat pattern
+d3 $ sound "hh:2*8"
+  # gain "<0.8 0.7 0.8 0.7>"
+  # pan (range 0.3 0.7 $ rand)
+  # lpf 12000
+
+-- Open hat pattern
+d4 $ sound "~ ho:1 ~ ~"
+  # gain 0.8
+  # pan 0.3
+
+-- Percussion pattern
+d5 $ sound "cp:4 ~ ~ cp:4"
+  # gain 0.8
+  # pan (range 0.4 0.6 $ slow 4 sine)
+
+-- Cymbal pattern
+d6 $ sound "~ ~ ~ crash:2"
+  # gain 0.9
+  # room 0.3
+  # size 0.5
+
+-- SECTION 3: COMPLETE DRUM RACK FUNCTION
+-- This function creates a complete drum kit that can be activated all at once
+
+let drums = do
+      d1 $ sound "bd(3,8)" # gain 1.0 # lpf 3000 # resonance 0.2
+      d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9 # room 0.2 # size 0.2
+      d3 $ sound "hh:2*8" # gain "<0.8 0.7 0.8 0.7>" # pan (range 0.3 0.7 $ rand) # lpf 12000
+      d4 $ sound "~ ho:1 ~ ~" # gain 0.8 # pan 0.3
+      d5 $ sound "cp:4 ~ ~ cp:4" # gain 0.8 # pan (range 0.4 0.6 $ slow 4 sine)
+
+-- SECTION 4: BASS PATTERNS
+-- Various bass patterns
+
+-- Basic bass pattern
+d7 $ n (scale "minor" "0 ~ 3 5 ~ 7 3 ~")
+  # sound "sawbass"
+  # gain 0.9
+  # lpf (range 300 1200 $ slow 8 sine)
+  # resonance 0.2
+  # legato 0.5
+
+-- Wobble bass pattern
+d7 $ n (scale "minor" "0 2 3 5")
+  # sound "wobble"
+  # gain 0.8
+  # lpf (range 300 2000 $ slow 4 $ saw)
+  # resonance 0.3
+  # legato 0.8
+  # speed 0.5
+
+-- SECTION 5: LEAD PATTERNS
+-- Melodic lead patterns
+
+-- Pluck lead
+d8 $ n (scale "minor" "0 3 5 7 12 7 5 3")
+  # sound "pluck"
+  # gain 0.8
+  # room 0.2
+  # size 0.2
+  # lpf 2000
+  # resonance 0.1
+
+-- Synth lead
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3")
+  # sound "supersaw"
+  # gain 0.7
+  # room 0.3
+  # size 0.3
+  # lpf (range 1000 3000 $ slow 4 sine)
+  # resonance 0.2
+  # legato 0.5
+
+-- SECTION 6: PAD PATTERNS
+-- Atmospheric pad sounds
+
+-- Ambient pad
+d9 $ n (scale "minor" "<0 2 3 5>")
+  # sound "superchip"
+  # gain 0.65
+  # attack 0.5
+  # release 2.0
+  # room 0.4
+  # size 0.4
+  # lpf 1500
+  # legato 2.0
+
+-- SECTION 7: EFFECTS AND TRANSFORMATION FUNCTIONS
+-- Functions for adding variety and interest
+
+-- Reverb function
+let withReverb p = p # room 0.5 # size 0.5
+
+-- Delay function
+let withDelay p = p # delay 0.5 # delaytime (1/3) # delayfeedback 0.5
+
+-- Filter sweep function
+let withSweep p = p # lpf (range 300 3000 $ slow 8 sine) # resonance 0.2
+
+-- Glitch function
+let withGlitch p = sometimes (# crush 4) $ sometimes (# coarse 8) $ p
+
+-- Random pan function
+let withRandomPan p = p # pan (rand)
+
+-- Stutter function
+let withStutter p = sometimes (stutter 4 0.1) $ sometimes (stutter 8 0.05) $ p
+
+-- SECTION 8: PATTERN TRANSFORMATION EXAMPLES
+-- Ways to transform existing patterns
+
+-- Transform 1: Add variation to a basic pattern
+d1 $ every 4 (fast 2) $ sound "bd(3,8)" # gain 1.0
+
+-- Transform 2: Add randomness to a pattern
+d2 $ sometimes (# speed 2) $ sound "~ sn:2 ~ sn:2" # gain 0.9
+
+-- Transform 3: Create patterns with multiple variations
+d3 $ every 4 (rev) $ every 3 (density 2) $ sound "hh:2*8" # gain 0.8
+
+-- Transform 4: Use Euclidean rhythms
+d4 $ sound "cp(5,8,2)" # gain 0.8
+
+-- SECTION 9: COMPLETE PERFORMANCE SECTIONS
+-- Pre-built sections for your performance
+
+-- Intro section with minimal drums
+let intro = do
+      d1 $ sound "bd(3,8)" # gain 1.0
+      d3 $ sound "hh:2*8" # gain 0.7
+      d7 $ n (scale "minor" "0 ~ 3 ~") # sound "sawbass" # gain 0.8 # lpf 800
+
+-- Build-up section
+let buildup = do
+      d1 $ every 4 (fast 2) $ sound "bd(3,8)" # gain 1.0
+      d2 $ every 8 (density 2) $ sound "~ sn:2 ~ sn:2" # gain 0.9
+      d3 $ every 2 (rev) $ sound "hh:2*8" # gain 0.8
+      d7 $ n (scale "minor" "0 3 5 7") # sound "sawbass" 
+        # gain 0.9 # lpf (range 500 2000 $ slow 8 sine)
+
+-- Drop section
+let drop = do
+      d1 $ sound "bd(3,8)" # gain 1.0
+      d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9
+      d3 $ sound "hh:2*16" # gain "<0.8 0.7 0.8 0.7>" # pan (rand)
+      d4 $ sound "~ ho:1 ~ ho:1" # gain 0.8
+      d5 $ sound "cp:4(3,8)" # gain 0.8
+      d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble" 
+        # gain 0.85 # lpf (range 300 3000 $ slow 4 saw)
+      d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+        # gain 0.8 # room 0.2 # size 0.2
+
+-- Breakdown section
+let breakdown = do
+      d1 $ sound "bd(2,8)" # gain 0.9
+      d2 silence
+      d3 $ sound "hh:2*8" # gain 0.7
+      d4 silence
+      d5 silence
+      d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+        # gain 0.65 # attack 0.5 # release 2.0 # room 0.4 # size 0.4
+
+-- Outro section
+let outro = do
+      d1 $ sound "bd(2,8)" # gain 0.9 # lpf 1000
+      d3 $ sound "hh:2*4" # gain 0.6
+      d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+        # gain 0.6 # attack 0.5 # release 3.0 # room 0.6 # size 0.6
+
+-- SECTION 10: CUSTOM SAMPLE MAPPING
+-- If you have custom samples, map them here
+
+-- Custom kick samples
+let kickMap = [
+      ("kick1", "bd:0"),
+      ("kick2", "bd:1"),
+      ("kick3", "bd:2"),
+      ("kickhard", "bd:3")
+    ]
+
+-- Custom snare samples
+let snareMap = [
+      ("snare1", "sn:0"),
+      ("snare2", "sn:1"),
+      ("rimshot", "sn:2"),
+      ("clap", "cp:0")
+    ]
+
+-- Custom synth samples
+let synthMap = [
+      ("bass", "sawbass"),
+      ("lead", "supersaw"),
+      ("pad", "superchip"),
+      ("plucky", "pluck")
+    ]
+
+-- SECTION 11: UTILITY FUNCTIONS
+-- Helpful functions for live performances
+
+-- Silence all
+let hush' = do
+      mapM_ ($ silence) [d1,d2,d3,d4,d5,d6,d7,d8,d9]
+
+-- Gradually introduce tracks
+let gradually f xs = do
+      mapM_ (\(i,x) -> do
+        threadDelay (i * 4000000)
+        f x) $ zip [0..] xs
+
+-- Randomly choose from a list of patterns
+let chooseFrom xs = do
+      x <- wchoose [(x, 1/fromIntegral (length xs)) | x <- xs]
+      x
+
+-- SECTION 12: ADVANCED PATTERNS
+-- More complex patterns for experienced users
+
+-- Polyrhythmic pattern
+let poly1 = d1 $ stack [
+      sound "bd(3,8)" # gain 1.0,
+      sound "sn:2(5,16)" # gain 0.9,
+      sound "hh:2(11,16)" # gain 0.8 # pan (rand)
+    ]
+
+-- Layered melodic pattern
+let melody1 = d8 $ stack [
+      n (scale "minor" "0 3 5 7") # sound "pluck" # gain 0.8 # pan 0.3,
+      n (scale "minor" "7 10 12 14") # sound "pluck" # gain 0.7 # pan 0.7
+    ] # room 0.2 # size 0.2
+
+-- Complex bass pattern with variations
+let complexBass = d7 $ every 4 (fast 2) $ every 3 (rev) $
+      n (scale "minor" "0 [~ 3] 5 [7 5]") # sound "sawbass"
+      # gain 0.9
+      # lpf (range 300 1500 $ slow 8 sine)
+      # resonance 0.3
+      # shape 0.3
+
+-- SECTION 13: EXAMPLE LIVE CODING SEQUENCE
+-- A sequence of commands that could be executed during a performance
+
+{-
+-- Start with a simple kick
+d1 $ sound "bd(3,8)" # gain 1.0
+
+-- Add hihat after 16 beats
+d3 $ sound "hh:2*8" # gain 0.8
+
+-- Add bassline after 32 beats
+d7 $ n (scale "minor" "0 ~ 3 ~") # sound "sawbass" # gain 0.8 # lpf 800
+
+-- Add snare after 64 beats
+d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9
+
+-- After 128 beats, transform the hihat pattern
+d3 $ every 4 (fast 2) $ sound "hh:2*8" # gain 0.8
+
+-- After 160 beats, add open hihat
+d4 $ sound "~ ho:1 ~ ~" # gain 0.8
+
+-- After 192 beats, transform the bass pattern
+d7 $ n (scale "minor" "0 3 5 7") # sound "sawbass" # gain 0.9 
+  # lpf (range 500 2000 $ slow 8 sine)
+
+-- After 224 beats, add a lead melody
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+  # gain 0.8 # room 0.2 # size 0.2
+
+-- After 256 beats, full drop
+d1 $ sound "bd(3,8)" # gain 1.0
+d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9
+d3 $ sound "hh:2*16" # gain "<0.8 0.7 0.8 0.7>" # pan (rand)
+d4 $ sound "~ ho:1 ~ ho:1" # gain 0.8
+d5 $ sound "cp:4(3,8)" # gain 0.8
+d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble" 
+  # gain 0.85 # lpf (range 300 3000 $ slow 4 saw)
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+  # gain 0.8 # room 0.2 # size 0.2
+
+-- After 384 beats, breakdown
+d1 $ sound "bd(2,8)" # gain 0.9
+d2 silence
+d3 $ sound "hh:2*8" # gain 0.7
+d4 silence
+d5 silence
+d7 silence
+d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+  # gain 0.65 # attack 0.5 # release 2.0 # room 0.4 # size 0.4
+
+-- After 448 beats, build up to second drop
+d1 $ every 4 (fast 2) $ sound "bd(3,8)" # gain 1.0
+d2 $ every 8 (density 2) $ sound "~ sn:2 ~ sn:2" # gain 0.9
+d3 $ every 2 (rev) $ sound "hh:2*8" # gain 0.8
+
+-- After 512 beats, second drop with variations
+d1 $ sound "bd(3,8)" # gain 1.0
+d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9
+d3 $ every 4 (fast 2) $ sound "hh:2*8" # gain 0.8
+d4 $ sound "~ ho:1 ~ ho:1" # gain 0.8
+d5 $ sound "cp:4(3,8)" # gain 0.8
+d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble" 
+  # gain 0.85 # lpf (range 300 3000 $ slow 4 saw)
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+  # gain 0.8 # room 0.2 # size 0.2
+
+-- After 640 beats, outro
+d1 $ sound "bd(2,8)" # gain 0.9 # lpf 1000
+d2 silence
+d3 $ sound "hh:2*4" # gain 0.6
+d4 silence
+d5 silence
+d7 silence
+d8 silence
+d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+  # gain 0.6 # attack 0.5 # release 3.0 # room 0.6 # size 0.6
+
+-- After 704 beats, end performance
+hush
+-}
+
+-- SECTION 14: CUSTOM SYNTH DEFINITIONS
+-- If you're using SuperDirt with custom synths, define them here
+
+{-
+-- Example custom synth definition (would go in your SuperDirt startup file)
+(
+SynthDef(\mySynth, {|out, freq=440, amp=0.5, pan=0, attack=0.01, release=1|
+    var sig, env;
+    env = EnvGen.kr(Env.perc(attack, release), doneAction: 2);
+    sig = SinOsc.ar(freq) * env * amp;
+    Out.ar(out, Pan2.ar(sig, pan));
+}).add;
+)
+
+-- Using custom synth in TidalCycles
+d8 $ n (scale "minor" "0 3 5 7") # s "mySynth" # gain 0.8 # attack 0.02 # release 0.5
+-}
+
+-- End of TidalCycles Template
