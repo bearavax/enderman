@@ -159,7 +159,7 @@ let buildup = do
       d1 $ every 4 (fast 2) $ sound "bd(3,8)" # gain 1.0
       d2 $ every 8 (density 2) $ sound "~ sn:2 ~ sn:2" # gain 0.9
       d3 $ every 2 (rev) $ sound "hh:2*8" # gain 0.8
-      d7 $ n (scale "minor" "0 3 5 7") # sound "sawbass" 
+      d7 $ n (scale "minor" "0 3 5 7") # sound "sawbass"
         # gain 0.9 # lpf (range 500 2000 $ slow 8 sine)
 
 -- Drop section
@@ -169,9 +169,9 @@ let drop = do
       d3 $ sound "hh:2*16" # gain "<0.8 0.7 0.8 0.7>" # pan (rand)
       d4 $ sound "~ ho:1 ~ ho:1" # gain 0.8
       d5 $ sound "cp:4(3,8)" # gain 0.8
-      d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble" 
+      d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble"
         # gain 0.85 # lpf (range 300 3000 $ slow 4 saw)
-      d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+      d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck"
         # gain 0.8 # room 0.2 # size 0.2
 
 -- Breakdown section
@@ -181,14 +181,14 @@ let breakdown = do
       d3 $ sound "hh:2*8" # gain 0.7
       d4 silence
       d5 silence
-      d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+      d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip"
         # gain 0.65 # attack 0.5 # release 2.0 # room 0.4 # size 0.4
 
 -- Outro section
 let outro = do
       d1 $ sound "bd(2,8)" # gain 0.9 # lpf 1000
       d3 $ sound "hh:2*4" # gain 0.6
-      d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+      d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip"
         # gain 0.6 # attack 0.5 # release 3.0 # room 0.6 # size 0.6
 
 -- SECTION 10: CUSTOM SAMPLE MAPPING
@@ -283,11 +283,11 @@ d3 $ every 4 (fast 2) $ sound "hh:2*8" # gain 0.8
 d4 $ sound "~ ho:1 ~ ~" # gain 0.8
 
 -- After 192 beats, transform the bass pattern
-d7 $ n (scale "minor" "0 3 5 7") # sound "sawbass" # gain 0.9 
+d7 $ n (scale "minor" "0 3 5 7") # sound "sawbass" # gain 0.9
   # lpf (range 500 2000 $ slow 8 sine)
 
 -- After 224 beats, add a lead melody
-d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck"
   # gain 0.8 # room 0.2 # size 0.2
 
 -- After 256 beats, full drop
@@ -296,9 +296,9 @@ d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9
 d3 $ sound "hh:2*16" # gain "<0.8 0.7 0.8 0.7>" # pan (rand)
 d4 $ sound "~ ho:1 ~ ho:1" # gain 0.8
 d5 $ sound "cp:4(3,8)" # gain 0.8
-d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble" 
+d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble"
   # gain 0.85 # lpf (range 300 3000 $ slow 4 saw)
-d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck"
   # gain 0.8 # room 0.2 # size 0.2
 
 -- After 384 beats, breakdown
@@ -308,7 +308,7 @@ d3 $ sound "hh:2*8" # gain 0.7
 d4 silence
 d5 silence
 d7 silence
-d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip"
   # gain 0.65 # attack 0.5 # release 2.0 # room 0.4 # size 0.4
 
 -- After 448 beats, build up to second drop
@@ -322,9 +322,9 @@ d2 $ sound "~ sn:2 ~ sn:2" # gain 0.9
 d3 $ every 4 (fast 2) $ sound "hh:2*8" # gain 0.8
 d4 $ sound "~ ho:1 ~ ho:1" # gain 0.8
 d5 $ sound "cp:4(3,8)" # gain 0.8
-d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble" 
+d7 $ n (scale "minor" "0 3 5 7 12 7 5 3") # sound "wobble"
   # gain 0.85 # lpf (range 300 3000 $ slow 4 saw)
-d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck" 
+d8 $ n (scale "minor" "0 3 7 12 14 12 7 3") # sound "pluck"
   # gain 0.8 # room 0.2 # size 0.2
 
 -- After 640 beats, outro
@@ -335,7 +335,7 @@ d4 silence
 d5 silence
 d7 silence
 d8 silence
-d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip" 
+d9 $ n (scale "minor" "<0 2 3 5>") # sound "superchip"
   # gain 0.6 # attack 0.5 # release 3.0 # room 0.6 # size 0.6
 
 -- After 704 beats, end performance
@@ -356,6 +356,7 @@ SynthDef(\mySynth, {|out, freq=440, amp=0.5, pan=0, attack=0.01, release=1|
 }).add;
 )
 
+/keep working
 -- Using custom synth in TidalCycles
 d8 $ n (scale "minor" "0 3 5 7") # s "mySynth" # gain 0.8 # attack 0.02 # release 0.5
 -}
